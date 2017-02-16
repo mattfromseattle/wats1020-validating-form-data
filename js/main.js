@@ -1,9 +1,16 @@
+
 // Checks to see if the page is ready for code to be executed.
 $(document).on('ready', function () {
     // Form validation rules to check fields of document.
+        // Adding a rule to verify month, year, and shipping dropdowns.
+    $.validator.addMethod("valueNotEquals", function (value, element, arg) {
+        return arg != value;
+    }, "Please select a value.");
+
     $('#order-form').validate({
-        submitHandler: function (form) {
+        submitHandler: function(form) {
             // When form is submitted, entered values and fields are validated against rules below.
+            console.log("Working");
             form.submit();
         },
         rules: {
@@ -36,10 +43,11 @@ $(document).on('ready', function () {
             },
             "expiry-month": {
                 required: true,
+                valueNotEquals: "Month"
             },
             "expiry-year": {
                 required: true,
-                year: true
+                valueNotEquals: "Year"
             },
             "cvv": {
                 required: true,
@@ -47,7 +55,8 @@ $(document).on('ready', function () {
                 digits: true
             },
             "shipping-method": {
-                required: true
+                required: true,
+                valueNotEquals: "Select One"
             },
             "comments": {
                 required: true,
